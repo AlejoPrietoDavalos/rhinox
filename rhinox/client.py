@@ -1,3 +1,4 @@
+from rhinox.models.menu import Menu
 from rhinox.urls import get_url_base
 from rhinox.endpoints.menu import get_menu
 
@@ -12,5 +13,9 @@ class Rhinox:
     def tkn(self) -> str:
         return self._tkn
 
-    def get_menu(self, *, sucursal_id: str):
-        return get_menu(sucursal_id=sucursal_id, tkn=self.tkn, url_base=self.url_base, verify=self.verify)
+    def get_menu(self, *, sucursal_id: str) -> Menu:
+        r = get_menu(sucursal_id=sucursal_id, tkn=self.tkn, url_base=self.url_base, verify=self.verify)
+        if r.status_code != 200:
+            raise Exception("Controlar status_code!=200 para la obtención del menu.")
+        return Menu(**r.json())
+        
