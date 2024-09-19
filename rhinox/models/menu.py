@@ -90,6 +90,7 @@ class PreciosDescuento(NoExtraModel):
     tipo: Literal["CREDITO", "DEBITO"]
     precio_descuento: int
 
+
 class CategoriaProductos(NoExtraModel):
     id: int
     negocio: int
