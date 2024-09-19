@@ -6,7 +6,15 @@ from pydantic import HttpUrl
 
 from rhinox.models.no_extra import NoExtraModel
 
-T_CategoriaProductos = Literal["Promos", "EMPANADAS", "BEBIDAS", "Frescas", "Extras", "Postres"]
+T_CategoriaProductos = Literal[
+    "Promos",
+    "EMPANADAS",
+    "BEBIDAS",      # FIXME: Duplicado o tirado manual?
+    "Bebidas",      # FIXME: Duplicado o tirado manual?
+    "Frescas",
+    "Extras",
+    "Postres"
+]
 
 
 class Negocio(NoExtraModel):
@@ -20,7 +28,7 @@ class Negocio(NoExtraModel):
     ciudad: str                 # FIXME: Mal tipeado, es string libre?
     direccion_sucursal: str
     commerce_id_plexo: int
-    instagram_url: HttpUrl
+    instagram_url: Optional[HttpUrl] = None
 
 
 class Identidad(NoExtraModel):
@@ -64,6 +72,24 @@ class Sucursal(NoExtraModel):
     pop_ups: List[PopUp]
 
 
+class Banco(NoExtraModel):
+    id: int
+    nombre: Literal["ITAU"]
+    codigo: None
+    icono: None
+
+
+class PromoBanco(NoExtraModel):
+    precio: float
+    porcentaje: int
+    banco: Banco
+
+
+class PreciosDescuento(NoExtraModel):
+    descripcion: str
+    tipo: Literal["CREDITO", "DEBITO"]
+    precio_descuento: int
+
 class CategoriaProductos(NoExtraModel):
     id: int
     negocio: int
@@ -73,7 +99,7 @@ class CategoriaProductos(NoExtraModel):
     imagenUrl: HttpUrl
     descripcion: str
     precio: float
-    precio_informativo: int
+    precio_informativo: Optional[int]
     updated_at: datetime
     created_at: datetime
     habilitado: int
@@ -88,11 +114,16 @@ class CategoriaProductos(NoExtraModel):
     es_regalo: int
     giftcard: None
     monto_descuento: float
+    promo_banco: PromoBanco
+    precios_descuento: List[PreciosDescuento]
+    precio_venta: Optional[int] = None
+
 
 class Categorias(NoExtraModel):
     id: int
     nombre: str
     productos: List[CategoriaProductos]
+
 
 class HorarioDetail(NoExtraModel):
     hora_inicio: dt.time
@@ -117,8 +148,8 @@ class Descuento(NoExtraModel):
     fecha_inicio: date
     fecha_fin: date
     monto_minimo: int
-    tipo_descuento: Literal["PORCENTAJE"]
-    valor: int
+    tipo_descuento: Literal[None, "PORCENTAJE"] = None
+    valor: Optional[int] = None
 
 
 class DescuentoMiniapp(NoExtraModel):
