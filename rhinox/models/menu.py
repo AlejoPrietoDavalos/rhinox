@@ -114,8 +114,8 @@ class CategoriaProductos(NoExtraModel):
     es_regalo: int
     giftcard: None
     monto_descuento: float
-    promo_banco: PromoBanco
-    precios_descuento: List[PreciosDescuento]
+    promo_banco: Optional[PromoBanco] = None
+    precios_descuento: Optional[List[PreciosDescuento]] = None
     precio_venta: Optional[int] = None
 
 
