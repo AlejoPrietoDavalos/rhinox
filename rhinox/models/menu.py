@@ -180,3 +180,22 @@ class Menu(NoExtraModel):
     horarios: List[Horarios]
     descuento: Descuento
     descuento_miniapps: List[DescuentoMiniapp]
+
+    def to_short_json(self) -> List[dict]:
+        menu_short = []
+        for cat in self.categorias:
+            for p in cat.productos:
+                prod_json = {
+                    "product_id": p.id,
+                    "name": p.nombre,
+                    "category": p.categoria,
+                    "description": p.descripcion,
+                    "price": p.precio
+                }
+                #prod_json["promo_banco"] = p.promo_banco                   # TODO: Preguntar q onda esto.
+                #prod_json["precios_descuento"] = p.precios_descuento       # TODO: Preguntar q onda esto.
+                # TODO: promo_banco
+                # TODO: precios_descuento
+                # TODO: precio_venta
+                menu_short.append(prod_json)
+        return menu_short
