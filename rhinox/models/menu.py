@@ -6,11 +6,12 @@ from pydantic import HttpUrl
 
 from rhinox.models.no_extra import NoExtraModel
 
+T_CreditCard = Literal["CREDITO", "DEBITO"]
 T_CategoriaProductos = Literal[
     "Promos",
     "EMPANADAS",
-    "BEBIDAS",      # FIXME: Duplicado o tirado manual?
-    "Bebidas",      # FIXME: Duplicado o tirado manual?
+    "BEBIDAS",      # FIXME: Duplicado o tipeado manual?
+    "Bebidas",      # FIXME: Duplicado o tipeado manual?
     "Frescas",
     "Extras",
     "Postres"
@@ -87,7 +88,7 @@ class PromoBanco(NoExtraModel):
 
 class PreciosDescuento(NoExtraModel):
     descripcion: str
-    tipo: Literal["CREDITO", "DEBITO"]
+    tipo: T_CreditCard
     precio_descuento: int
 
 
@@ -155,7 +156,7 @@ class Descuento(NoExtraModel):
 
 class DescuentoMiniapp(NoExtraModel):
     nombre: Optional[str] = None
-    tipo: Literal["DEBITO", "CREDITO"]
+    tipo: T_CreditCard
     porcentaje: int
     fecha_inicio: date
     fecha_fin: date
