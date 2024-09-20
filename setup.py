@@ -4,7 +4,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="rhinox",
-    version="0.0.3",
+    version="0.0.4",
     author="Alejo Prieto Dávalos",
     author_email="alejoprietodavalos@gmail.com",
     packages=find_packages(),

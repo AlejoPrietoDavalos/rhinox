@@ -1,6 +1,11 @@
+from typing import Type, TypeVar
+
 from rhinox.models.menu import Menu
 from rhinox.urls import get_url_base
 from rhinox.endpoints.menu import get_menu
+
+T_Rhinox = TypeVar("T_Rhinox", bound="Rhinox")
+
 
 class Rhinox:
     def __init__(self, *, tkn: str, is_production: bool = True, verify: bool = True):
